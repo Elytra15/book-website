@@ -78,5 +78,5 @@ To personalize:
 - Use the search bar and filters to explore the book collection.
 - Display the currently reading book in the dedicated section.
 
-##Example
+## Example
 https://about.elytra15.com/books
