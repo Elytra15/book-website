@@ -77,3 +77,6 @@ To personalize:
 - Add, update, or remove books by editing the JSON files.
 - Use the search bar and filters to explore the book collection.
 - Display the currently reading book in the dedicated section.
+
+##Example
+https://about.elytra15.com/books
