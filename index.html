@@ -8,6 +8,11 @@
     <meta name="keywords" content="book reviews, reading, books, ratings">
     <title>My Book Reviews</title>
     <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-papovpS4kZT1Vd1cV0E+X+gK+pH0dR7pb5sZYZkJ56jSx6k71e4BxoEAnYMBfr3GKxjpzjI3bC1aL4HgWop3kQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         @font-face {
             font-family: 'Roboto Mono';
@@ -23,21 +28,57 @@
             text-align: center;
             margin: 0;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         h1 {
             color: #ff0000;
             margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        #reading-and-stats-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px auto;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease;
         }
 
         #currently-reading-container {
-            display: none;
             background-color: #fffbcc;
             border: 2px solid #ffcc00;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            max-width: 800px;
-            margin: 0 auto 40px auto;
+            flex: 2;
             padding: 20px;
             display: flex;
             flex-direction: row;
@@ -45,6 +86,14 @@
             gap: 20px;
             position: relative;
             z-index: 10;
+            min-width: 300px;
+            box-sizing: border-box;
+            max-width: 600px; 
+            transition: transform 0.3s;
+        }
+
+        #currently-reading-container:hover {
+            transform: translateY(-5px);
         }
 
         #currently-reading-container img {
@@ -52,23 +101,33 @@
             height: auto;
             border-radius: 5px;
             object-fit: cover;
+            loading: lazy; 
+            transition: transform 0.3s;
+        }
+
+        #currently-reading-container img:hover {
+            transform: scale(1.05);
         }
 
         #currently-reading-details {
             text-align: left;
             flex: 1;
+            word-wrap: break-word; 
+            animation: fadeIn 1s ease;
         }
 
         #currently-reading-details h2 {
             margin: 0 0 10px 0;
             font-size: 1.8em;
             color: #c01919;
+            word-break: break-word; 
         }
 
         #currently-reading-details .author {
             font-size: 1.1em;
             color: #555;
             margin-bottom: 10px;
+            word-break: break-word;
         }
 
         #currently-reading-details .start-date {
@@ -87,8 +146,106 @@
             display: flex;
             gap: 10px;
             justify-content: flex-start;
+            animation: fadeIn 1s ease;
         }
 
+        .world-of-books-button,
+        .goodreads-button {
+            padding: 10px 12px;
+            background-color: #ffcc00;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background-color 0.3s, transform 0.3s;
+            flex: 1;
+            text-align: center;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .world-of-books-button i,
+        .goodreads-button i {
+            font-size: 1em;
+        }
+
+        .world-of-books-button:hover,
+        .goodreads-button:hover {
+            background-color: #e6b800;
+            transform: scale(1.05);
+        }
+
+        #stats-container {
+            background-color: #e6f7ff;
+            border: 2px solid #1890ff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            flex: 1;
+            min-width: 300px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 1s ease;
+        }
+
+        #stats-container h3 {
+            margin-top: 0;
+            color: #1890ff;
+        }
+
+        #stats-container p {
+            margin: 10px 0;
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        #stats-container .label {
+            color: #1890ff;
+            font-weight: bold;
+        }
+
+        #stats-container .value {
+            color: #555;
+        }
+
+        #stats-container ol {
+            padding-left: 20px;
+            margin: 5px 0 0 0;
+        }
+
+        #stats-container ol li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .stats-section ol {
+            padding-left: 30px;
+            margin: 0;
+        }
+
+        .stats-section ol li {
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.4em;
+        }
+
+        .star {
+            color: #ffcc00;
+            font-size: 1em;
+            margin-right: 2px;
+        }
+
+        .star.empty {
+            color: #ddd;
+        }
 
         #books-container {
             display: grid;
@@ -97,6 +254,8 @@
             margin: 0 auto;
             max-width: 1200px;
             padding: 20px;
+            box-sizing: border-box;
+            animation: fadeIn 1s ease;
         }
 
         .book {
@@ -112,6 +271,14 @@
             min-height: 450px;
             max-width: 350px;
             margin: 0 auto;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .book:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .book img {
@@ -121,6 +288,12 @@
             border-radius: 5px;
             object-fit: cover;
             margin-bottom: 15px;
+            loading: lazy; 
+            transition: transform 0.3s;
+        }
+
+        .book img:hover {
+            transform: scale(1.05);
         }
 
         .book h2 {
@@ -129,6 +302,12 @@
             color: #ff0000;
             height: 3em;
             overflow: hidden;
+            word-break: break-word;
+            transition: color 0.3s;
+        }
+
+        .book:hover h2 {
+            color: #c01919;
         }
 
         .author,
@@ -138,6 +317,7 @@
             margin-bottom: 10px;
             height: 1.2em;
             overflow: hidden;
+            word-break: break-word; 
         }
 
         .rating-container {
@@ -206,6 +386,7 @@
 
         .search-container {
             margin-bottom: 20px;
+            animation: fadeIn 1s ease;
         }
 
         .search-input {
@@ -215,6 +396,14 @@
             max-width: 300px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            outline: none;
         }
 
         .filter-container {
@@ -224,6 +413,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+            animation: fadeIn 1s ease;
         }
 
         .filter-container select {
@@ -232,6 +422,14 @@
             margin-right: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .filter-container select:focus {
+            border-color: #1890ff;
+            box-shadow: 0 0 5px rgba(24, 144, 255, 0.5);
+            outline: none;
         }
 
         .filter-container button {
@@ -241,7 +439,16 @@
             border-radius: 5px;
             cursor: pointer;
             background-color: #f4f4f4;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .filter-container button:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
         }
 
         .filter-container button.active {
@@ -258,6 +465,7 @@
             display: flex;
             justify-content: center;
             gap: 5px;
+            animation: fadeIn 1s ease;
         }
 
         .pagination button {
@@ -266,22 +474,259 @@
             border-radius: 5px;
             background-color: #f4f4f4;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            box-sizing: border-box;
         }
 
         .pagination button.active,
         .pagination button:hover {
             background-color: #ddd;
+            transform: scale(1.05);
         }
 
         .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            animation: fadeIn 1s ease;
         }
 
-        .world-of-books-button,
-        .goodreads-button {
+        @media (max-width: 1024px) {
+        }
+
+        @media (max-width: 767px) {
+            #currently-reading-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center; 
+            }
+
+            #currently-reading-details {
+                text-align: center; 
+            }
+
+            #books-container {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .book {
+                padding: 15px;
+                min-height: 350px;
+                max-width: 100%;
+            }
+
+            .book img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 2 / 3;
+                margin-bottom: 10px;
+            }
+
+            .book h2 {
+                font-size: 1.1em;
+                height: auto; 
+                overflow: visible;
+                word-break: break-word; 
+            }
+
+            .author,
+            .date-read {
+                font-size: 0.9em;
+                margin-bottom: 8px;
+                height: auto; 
+                overflow: visible;
+                word-break: break-word; 
+            }
+
+            .book p {
+                font-size: 0.9em;
+                margin: 8px 0;
+                height: auto; 
+                overflow: visible;
+            }
+
+            .rating .star {
+                font-size: 1em;
+            }
+
+            .search-input {
+                max-width: 100%;
+            }
+
+            .filter-container select,
+            .filter-container button {
+                max-width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .world-of-books-button,
+            .goodreads-button {
+                padding: 8px 10px;
+                font-size: 0.8em;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #books-container {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .book {
+                padding: 10px;
+                min-height: 320px;
+            }
+
+            .book img {
+                aspect-ratio: 2 / 3;
+                margin-bottom: 8px;
+            }
+
+            .book h2 {
+                font-size: 1em;
+                height: auto; 
+                word-break: break-word; 
+            }
+
+            .author,
+            .date-read {
+                font-size: 0.8em;
+                margin-bottom: 5px;
+                height: auto;
+                word-break: break-word; 
+            }
+
+            .book p {
+                font-size: 0.85em;
+                margin: 5px 0;
+                height: auto; 
+            }
+
+            .rating .star {
+                font-size: 0.95em;
+            }
+
+            .pagination button {
+                padding: 8px 10px;
+                font-size: 0.85em;
+            }
+        }
+
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8); 
+            animation: fadeIn 0.5s ease;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            position: relative;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-book-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .modal-book-details {
+            text-align: left;
+        }
+
+        .modal-book-details h2 {
+            margin-top: 0;
+            color: #ff0000;
+        }
+
+        .modal-book-details .author {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .modal-book-details .date-read {
+            font-size: 1em;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .modal-book-details .rating {
+            font-size: 1.2em;
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+
+        .modal-book-details .review {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .modal-action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-action-buttons button {
             padding: 10px 12px;
             background-color: #ffcc00;
             color: #333;
@@ -289,66 +734,17 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.85em;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
             flex: 1;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
 
-        .world-of-books-button:hover,
-        .goodreads-button:hover {
+        .modal-action-buttons button:hover {
             background-color: #e6b800;
-        }
-
-        @media (max-width: 767px) {
-            .filter-container {
-                flex-direction: column;
-            }
-
-            .filter-container select,
-            .filter-container button {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            #books-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .book {
-                max-width: none;
-                min-height: auto;
-            }
-
-            #currently-reading-container {
-                flex-direction: column;
-                max-width: 100%;
-                align-items: center;
-            }
-
-            #currently-reading-container img {
-                width: 100%;
-                max-width: 200px;
-            }
-
-            #currently-reading-details {
-                text-align: center;
-            }
-
-            #currently-reading-details .action-buttons {
-                justify-content: center;
-            }
-        }
-
-
-        @media (max-width: 480px) {
-            #books-container {
-                grid-template-columns: 1fr;
-            }
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -356,16 +752,41 @@
 <body>
     <h1>The Books I Have Read</h1>
 
-    <div id="currently-reading-container">
-        <img src="" alt="Currently Reading Book" id="currently-reading-image">
-        <div id="currently-reading-details">
-            <h2 id="currently-reading-title">Book Title</h2>
-            <div class="author" id="currently-reading-author">by Author Name</div>
-            <div class="start-date" id="currently-reading-start-date">Started on: YYYY-MM-DD</div>
-            <div class="status">In Progress</div>
-            <div class="action-buttons">
-                <button class="world-of-books-button" id="current-world-of-books-button">View on World of Books</button>
-                <button class="goodreads-button" id="current-goodreads-button">Show on Goodreads</button>
+    <div id="reading-and-stats-container">
+        <div id="currently-reading-container">
+            <img src="" alt="Currently Reading Book" id="currently-reading-image" loading="lazy">
+            <div id="currently-reading-details">
+                <h2 id="currently-reading-title">Book Title</h2>
+                <div class="author" id="currently-reading-author">by Author Name</div>
+                <div class="start-date" id="currently-reading-start-date">Started on: YYYY-MM-DD</div>
+                <div class="status">In Progress</div>
+                <div class="action-buttons">
+                    <button class="world-of-books-button" id="current-world-of-books-button">
+                        <i class="fas fa-book"></i> View on World of Books
+                    </button>
+                    <button class="goodreads-button" id="current-goodreads-button">
+                        <i class="fab fa-goodreads-g"></i> Show on Goodreads
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="stats-container">
+            <h3>Statistics</h3>
+            <p><span class="label">Total Read Books:</span> <span class="value" id="total-read-books">0</span></p>
+            <p><span class="label">Books Read This Year:</span> <span class="value" id="books-read-this-year">0</span></p>
+            <p><span class="label">Books You Will Read This Year (Estimated):</span> <span class="value"
+                    id="projected-books">0</span></p>
+            <p><span class="label">Average Rating:</span> <span class="value" id="average-rating">0</span>
+                <span id="average-rating-stars"></span>
+            </p>
+            <div class="stats-section">
+                <p><span class="label">Top 3 Authors:</span></p>
+                <ol id="top-authors">
+                    <li>Author 1 (0 books)</li>
+                    <li>Author 2 (0 books)</li>
+                    <li>Author 3 (0 books)</li>
+                </ol>
             </div>
         </div>
     </div>
@@ -382,8 +803,12 @@
             <option value="rating">Sort by Rating</option>
         </select>
 
-        <button id="toggleSortOrder">Toggle Asc/Desc</button>
-        <button id="toggleView" class="active">My Want to Read</button>
+        <button id="toggleSortOrder">
+            <i class="fas fa-sort-amount-down"></i> Sort Order: Desc
+        </button>
+        <button id="toggleView" class="active">
+            <i class="fas fa-list"></i> My Want to Read
+        </button>
     </div>
 
     <div id="books-container">
@@ -393,7 +818,30 @@
     </div>
 
     <div class="footer">
-        <p>V.1.1<br>Soon available on GitHub.</p>
+        <p>V.1.2<br>Run your own book website. You will find this project on GitHub <a href="https://github.com/Elytra15/book-website" target="_blank">https://github.com/Elytra15/book-website</a></p>
+    </div>
+
+
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img src="" alt="Book Image" class="modal-book-image" id="modal-book-image">
+            <div class="modal-book-details">
+                <h2 id="modal-book-title">Book Title</h2>
+                <div class="author" id="modal-book-author">by Author Name</div>
+                <div class="date-read" id="modal-book-date-read">Read on: YYYY-MM-DD</div>
+                <div class="rating" id="modal-book-rating"></div>
+                <div class="review" id="modal-book-review">Book review goes here...</div>
+                <div class="modal-action-buttons">
+                    <button id="modal-world-of-books-button">
+                        <i class="fas fa-book"></i> View on World of Books
+                    </button>
+                    <button id="modal-goodreads-button">
+                        <i class="fab fa-goodreads-g"></i> Show on Goodreads
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -422,6 +870,7 @@
                 })
                 .then(books => {
                     allBooksRead = books;
+                    calculateAndDisplayStats();
                     applySort();
                 })
                 .catch(error => console.error('Error fetching read books:', error));
@@ -525,7 +974,7 @@
                     starsHTML = `
                         <div class="rating">
                             ${fullStars.split('').map(() => `<span class="star">★</span>`).join('')}
-                            ${emptyStars.split('').map(() => `<span class="star star-empty">☆</span>`).join('')}
+                            ${emptyStars.split('').map(() => `<span class="star empty">☆</span>`).join('')}
                         </div>
                     `;
                 } else {
@@ -537,19 +986,21 @@
 
                 const goodreadsButton = document.createElement('button');
                 goodreadsButton.className = 'goodreads-button';
-                goodreadsButton.textContent = 'Show on Goodreads';
+                goodreadsButton.innerHTML = `<i class="fab fa-goodreads-g"></i> Show on Goodreads`;
                 const goodreadsQuery = encodeURIComponent(book.title);
                 const goodreadsSearchURL = `https://www.goodreads.com/search?q=${goodreadsQuery}`;
-                goodreadsButton.addEventListener('click', () => {
+                goodreadsButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     window.open(goodreadsSearchURL, '_blank');
                 });
 
                 const worldOfBooksButton = document.createElement('button');
                 worldOfBooksButton.className = 'world-of-books-button';
-                worldOfBooksButton.textContent = 'View on World of Books';
+                worldOfBooksButton.innerHTML = `<i class="fas fa-book"></i> View on World of Books`;
                 const worldOfBooksQuery = encodeURIComponent(book.title);
                 const worldOfBooksSearchURL = `https://www.worldofbooks.com/en-gb/search?q=${worldOfBooksQuery}`;
-                worldOfBooksButton.addEventListener('click', () => {
+                worldOfBooksButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     window.open(worldOfBooksSearchURL, '_blank');
                 });
 
@@ -557,7 +1008,7 @@
                 actionButtonsDiv.appendChild(goodreadsButton);
 
                 bookElement.innerHTML = `
-                    <img src="${book.image}" alt="${book.title}">
+                    <img src="${book.image}" alt="${book.title}" loading="lazy">
                     <h2>${book.title}</h2>
                     ${authorContent}
                     ${dateReadContent}
@@ -566,6 +1017,12 @@
                 `;
 
                 bookElement.appendChild(actionButtonsDiv);
+
+
+                bookElement.addEventListener('click', () => {
+                    openModal(book);
+                });
+
                 booksContainer.appendChild(bookElement);
             });
 
@@ -626,10 +1083,7 @@
                     bValue = b.rating;
                 }
 
-                if (sortBy === 'dateRead') {
-                    if (aValue < bValue) return sortOrder === 'desc' ? 1 : -1;
-                    if (aValue > bValue) return sortOrder === 'desc' ? -1 : 1;
-                } else if (sortBy === 'rating') {
+                if (sortBy === 'dateRead' || sortBy === 'rating') {
                     if (aValue < bValue) return sortOrder === 'desc' ? 1 : -1;
                     if (aValue > bValue) return sortOrder === 'desc' ? -1 : 1;
                 } else {
@@ -659,7 +1113,7 @@
         document.getElementById('toggleSortOrder').addEventListener('click', function () {
             sortDescending = !sortDescending;
             currentSortOrder = sortDescending ? 'desc' : 'asc';
-            this.textContent = `Sort Order: ${sortDescending ? 'Desc' : 'Asc'}`;
+            this.innerHTML = `<i class="fas fa-sort-amount-${sortDescending ? 'down' : 'up'}"></i> Sort Order: ${sortDescending ? 'Desc' : 'Asc'}`;
             this.classList.toggle('active', sortDescending);
             currentPage = 1;
             updateHash();
@@ -669,7 +1123,7 @@
 
         document.getElementById('toggleView').addEventListener('click', function () {
             currentView = currentView === 'read' ? 'wantToRead' : 'read';
-            this.textContent = currentView === 'read' ? 'My Want to Read' : 'My Read Books';
+            this.innerHTML = `<i class="fas fa-${currentView === 'read' ? 'list' : 'book'}"></i> ${currentView === 'read' ? 'My Want to Read' : 'My Read Books'}`;
             this.classList.toggle('want-to-read-active', currentView === 'wantToRead');
             currentPage = 1;
             updateHash();
@@ -691,47 +1145,39 @@
             fetchCurrentlyReading();
         };
 
-
         const parseHash = () => {
-            const hash = window.location.hash.substring(1); 
+            const hash = window.location.hash.substring(1);
             const params = new URLSearchParams(hash);
-
 
             const view = params.get('view');
             const page = parseInt(params.get('page'), 10);
             const sortBy = params.get('sortBy');
             const sortOrder = params.get('sortOrder');
 
-
             if (view && (view === 'read' || view === 'wantToRead')) {
                 currentView = view;
-                document.getElementById('toggleView').textContent = currentView === 'read' ? 'My Want to Read' : 'My Read Books';
+                document.getElementById('toggleView').innerHTML = `<i class="fas fa-${currentView === 'read' ? 'list' : 'book'}"></i> ${currentView === 'read' ? 'My Want to Read' : 'My Read Books'}`;
                 document.getElementById('toggleView').classList.toggle('want-to-read-active', currentView === 'wantToRead');
             }
-
 
             if (!isNaN(page) && page > 0) {
                 currentPage = page;
             }
-
 
             if (sortBy && ['title', 'author', 'dateRead', 'rating'].includes(sortBy)) {
                 currentSortBy = sortBy;
                 document.getElementById('sortBy').value = sortBy;
             }
 
-
             if (sortOrder && ['asc', 'desc'].includes(sortOrder)) {
                 currentSortOrder = sortOrder;
                 sortDescending = sortOrder === 'desc';
-                document.getElementById('toggleSortOrder').textContent = `Sort Order: ${sortDescending ? 'Desc' : 'Asc'}`;
+                document.getElementById('toggleSortOrder').innerHTML = `<i class="fas fa-sort-amount-${sortDescending ? 'down' : 'up'}"></i> Sort Order: ${sortDescending ? 'Desc' : 'Asc'}`;
                 document.getElementById('toggleSortOrder').classList.toggle('active', sortDescending);
             } else {
-
-                document.getElementById('toggleSortOrder').textContent = `Sort Order: ${sortDescending ? 'Desc' : 'Asc'}`;
+                document.getElementById('toggleSortOrder').innerHTML = `<i class="fas fa-sort-amount-down"></i> Sort Order: ${sortDescending ? 'Desc' : 'Asc'}`;
             }
         };
-
 
         const updateHash = () => {
             const params = new URLSearchParams();
@@ -741,7 +1187,6 @@
             params.set('sortOrder', currentSortOrder);
             window.location.hash = params.toString();
         };
-
 
         window.addEventListener('hashchange', () => {
             parseHash();
@@ -755,9 +1200,154 @@
             parseHash();
         };
 
-        
         document.addEventListener('DOMContentLoaded', initializePage);
+
+        function calculateAndDisplayStats() {
+            const totalReadBooks = allBooksRead.length;
+            document.getElementById('total-read-books').textContent = totalReadBooks;
+
+            const currentYear = new Date().getFullYear();
+            const today = new Date();
+            const firstDayOfYear = new Date(currentYear, 0, 1);
+            const weeksPassed = getWeekNumber(today) - getWeekNumber(firstDayOfYear) + 1;
+            const weeksPassedAdjusted = weeksPassed > 0 ? weeksPassed : 1;
+            const booksReadThisYear = allBooksRead.filter(book => {
+                if (book.dateRead) {
+                    const bookDate = new Date(book.dateRead);
+                    return bookDate.getFullYear() === currentYear && bookDate <= today;
+                }
+                return false;
+            }).length;
+            document.getElementById('books-read-this-year').textContent = booksReadThisYear;
+
+            const totalWeeksInYear = 52;
+            const remainingWeeks = totalWeeksInYear - weeksPassed;
+            const averageBooksPerWeek = weeksPassedAdjusted > 0 ? (booksReadThisYear / weeksPassedAdjusted) : 0;
+            const projectedBooks = Math.round(averageBooksPerWeek * remainingWeeks);
+            document.getElementById('projected-books').textContent = projectedBooks;
+
+            const ratedBooks = allBooksRead.filter(book => typeof book.rating === 'number');
+            const totalRating = ratedBooks.reduce((sum, book) => sum + book.rating, 0);
+            const averageRating = ratedBooks.length > 0 ? (totalRating / ratedBooks.length).toFixed(2) : '0';
+            document.getElementById('average-rating').textContent = averageRating;
+
+            const averageRatingStars = document.getElementById('average-rating-stars');
+            averageRatingStars.innerHTML = generateStarRating(averageRating);
+
+            const authorCount = {};
+            allBooksRead.forEach(book => {
+                if (book.author) {
+                    authorCount[book.author] = (authorCount[book.author] || 0) + 1;
+                }
+            });
+
+            const topAuthors = Object.entries(authorCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3);
+
+            const topAuthorsList = document.getElementById('top-authors');
+            topAuthorsList.innerHTML = '';
+            topAuthors.forEach(([author, count]) => {
+                const li = document.createElement('li');
+                li.textContent = `${author} (${count} book${count > 1 ? 's' : ''})`;
+                topAuthorsList.appendChild(li);
+            });
+
+            for (let i = topAuthors.length; i < 3; i++) {
+                const li = document.createElement('li');
+                li.textContent = `Author ${i + 1} (0 books)`;
+                topAuthorsList.appendChild(li);
+            }
+        }
+
+        function generateStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+            const emptyStars = 5 - fullStars - halfStar;
+            let starsHTML = '';
+
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += `<span class="star">★</span>`;
+            }
+
+            if (halfStar) {
+                starsHTML += `<span class="star">☆</span>`;
+            }
+
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += `<span class="star empty">☆</span>`;
+            }
+
+            return starsHTML;
+        }
+
+        function getWeekNumber(d) {
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return weekNo;
+        }
+
+        const modal = document.getElementById('bookModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const modalBookImage = document.getElementById('modal-book-image');
+        const modalBookTitle = document.getElementById('modal-book-title');
+        const modalBookAuthor = document.getElementById('modal-book-author');
+        const modalBookDateRead = document.getElementById('modal-book-date-read');
+        const modalBookRating = document.getElementById('modal-book-rating');
+        const modalBookReview = document.getElementById('modal-book-review');
+        const modalWorldOfBooksButton = document.getElementById('modal-world-of-books-button');
+        const modalGoodreadsButton = document.getElementById('modal-goodreads-button');
+
+        function openModal(book) {
+            modalBookImage.src = book.image;
+            modalBookImage.alt = book.title;
+            modalBookTitle.textContent = book.title;
+            modalBookAuthor.textContent = `by ${book.author || 'Unknown Author'}`;
+            modalBookDateRead.textContent = book.dateRead ? `Read on: ${book.dateRead}` : 'Date Read: N/A';
+            modalBookReview.textContent = book.review || 'No review available.';
+
+            let starsHTML = '';
+            if (book.rating) {
+                let fullStars = '★'.repeat(book.rating);
+                let emptyStars = '☆'.repeat(5 - book.rating);
+                starsHTML = `
+                    ${fullStars.split('').map(() => `<span class="star">★</span>`).join('')}
+                    ${emptyStars.split('').map(() => `<span class="star empty">☆</span>`).join('')}
+                `;
+            } else {
+                starsHTML = `<span class="star empty">☆</span>`.repeat(5);
+            }
+            modalBookRating.innerHTML = starsHTML;
+
+            const goodreadsQuery = encodeURIComponent(book.title);
+            const goodreadsSearchURL = `https://www.goodreads.com/search?q=${goodreadsQuery}`;
+            modalGoodreadsButton.onclick = () => {
+                window.open(goodreadsSearchURL, '_blank');
+            };
+
+            const worldOfBooksQuery = encodeURIComponent(book.title);
+            const worldOfBooksSearchURL = `https://www.worldofbooks.com/en-gb/search?q=${worldOfBooksQuery}`;
+            modalWorldOfBooksButton.onclick = () => {
+                window.open(worldOfBooksSearchURL, '_blank');
+            };
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        closeModalBtn.onclick = function () {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
     </script>
 </body>
-
 </html>
